@@ -8,6 +8,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/openshift/origin/test/extended/cluster/metrics"
 	"github.com/redhat-performance/pbench-analyzer/pkg/result"
 	"github.com/redhat-performance/pbench-analyzer/pkg/utils"
 )
@@ -17,6 +18,7 @@ type config struct {
 	resultDir  string
 	fileHeader map[string][]string
 	hosts      []result.Host
+	Metrics    []metrics.Metrics
 	keys       []string
 }
 
@@ -92,6 +94,13 @@ func (c *config) addKeys() {
 
 // Process does the bulk of the math reading the CSV raw data and saving results
 func (c *config) Process() {
+
+	var m []metrics.Metrics
+	err := utils.GetMetics(c.searchDir, &m)
+	if err != nil {
+		fmt.Printf("Error getting Metics %v\n", err)
+	}
+	c.Metrics = m
 	c.addKeys()
 	for i, host := range c.hosts {
 		// Find each raw data CSV
@@ -131,7 +140,7 @@ func (c *config) WriteToDisk() error {
 		return err
 	}
 
-	err = utils.WriteJSON(c.resultDir, c.hosts)
+	err = utils.WriteJSON(c.resultDir, result.Result{Hosts: c.hosts, Metrics: c.Metrics})
 	if err != nil {
 		return err
 	}
