@@ -12,7 +12,7 @@ var searchDir, resultDir, processString, netString, blockString string
 func initFlags() {
 	flag.StringVar(&searchDir, "i", "/var/lib/pbench-agent/benchmark_result/tools-default/", "pbench run result directory to parse")
 	flag.StringVar(&resultDir, "o", "/tmp/", "output directory for parsed CSV result data")
-	flag.StringVar(&processString, "proc", "openshift_start_master_api_,openshift_start_master_controll,hyperkube_kubelet_,openshift_start_node_,etcd,dockerd-current_,elasticsearc,prometheus_,systemd_--switched-root,openshift_start_network_,ovs-vswitchd_unix,openshift-router,fluentd,kibana,heapster,crio", "list of processes to gather")
+	flag.StringVar(&processString, "proc", "openshift_start_master_api_,openshift_start_master_controll,hyperkube_kubelet_,openshift_start_node_,etcd,dockerd-current_,elasticsearc,prometheus_,systemd_--switched-root,openshift_start_network_,ovs-vswitchd_unix,openshift-router,fluentd,kibana,heapster,crio,openshift-kube-apiserver,openshift-apiserver,machine-config-controller,machine-config-daemon,machine-controller-manager,machine-config-server,machine-healthcheck,kube-controller-manager,kube-scheduler,openshift-network-controller,auth-operator,autoscaler-operator,coredns,node-exporter,tuned,service-serving-cert-signer,olm-operators,package-server", "list of processes to gather")
 	flag.StringVar(&blockString, "blkdev", "sda-write,sda-read,vda-write,vda-read,xvda-write,xvda-read,xvdb-write,xvdb-read,nvme0n1-write,nvme0n1-read", "List of block devices")
 	flag.StringVar(&netString, "netdev", "eth0-rx,eth0-tx", "List of network devices")
 	flag.Parse()
